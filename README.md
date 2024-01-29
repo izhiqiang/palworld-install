@@ -79,3 +79,39 @@ sudo cp /home/$(whoami)/Steam/steamapps/common/PalServer/DefaultPalWorldSettings
 ~~~
 sudo vim /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
+
+#### 配置zram提高系统内存使用率，减少物理磁盘读写
+
+~~~
+sudo apt update -y
+sudo apt-get install zram-config -y
+sudo systemctl start zram-config.service
+~~~
+
+#### 配置Swap
+
+~~~
+//创建一个swap文件
+sudo fallocate -l 8G /swapfile
+//设置文件权限
+sudo chmod 600 /swapfile
+//将文件格式化为swap格式
+sudo mkswap /swapfile
+//启用swap文件
+sudo swapon /swapfile
+//设置永久使用swap文件
+echo /swapfile   none    swap    sw    0   0 >> /etc/fstab
+//重新加载fstab文件
+sudo swapon --all
+//验证swap设置是否成功
+swapon --show
+~~~
+
+#### 监控内存占用并在占用比例达到 90% 时自动重启
+
+~~~
+cd ~/auto_restart.sh
+wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/auto_restart.sh
+* * * * * /bin/bash ~/auto_restart.sh > /dev/null 2>&1
+~~~
+
