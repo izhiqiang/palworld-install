@@ -6,7 +6,7 @@ cd palworld-install
 docker-compose up -d
 ~~~
 
-#### **脚本一键部署环境**
+#### **一键脚本部署环境**
 - 服务器套餐配置：以CPU 4核、内存 16GB为例（通常可以满足6-8人同时在线联机）
 - 操作系统：Ubuntu 22.04 LTS
 
