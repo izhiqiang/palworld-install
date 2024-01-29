@@ -1,3 +1,11 @@
+#### Dokcer环境
+
+~~~
+git clone https://github.com/zzqqw/palworld-install.git
+cd palworld-install
+docker-compose up -d
+~~~
+
 #### **部署环境**
 
 - 服务器套餐配置：以CPU 4核、内存 16GB为例（通常可以满足6-8人同时在线联机）
