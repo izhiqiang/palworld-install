@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  dedicated-server:
+    image: zhiqiangwang/palworld-server:latest
+    # build: # only use in test
+    #   context: .
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 8211:8211/udp
+      # - 25575:25575/tcp # only use in RCON_ENABLED=true
+    environment:
+      - PORT=8211
+      - SERVER_NAME=Default Palworld Server
+      - SERVER_DESC=Default Palworld Server
+      - ADMIN_PASSWORD=steam
+      - SERVER_PASSWORD=
+      - RCON_ENABLED=false
+      - RCON_PORT=25575
+      - CLI_ARGS="-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data:/home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+      - ./mods:/home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD

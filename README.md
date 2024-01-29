@@ -64,7 +64,7 @@ sudo chmod 777 /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config
 默认情况下，PalWorldSettings.ini文件是空的，手动配置的门槛很高，因此我们推荐在默认配置文件的基础上进行修改。
 
 ~~~
-sudo cp /home/$(whoami)/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo cp /home/$(whoami)/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
 3、使用如下命令打开游戏参数的配置文件：PalWorldSettings.ini。
