@@ -39,6 +39,10 @@ EXPOSE ${PORT}/udp ${RCON_PORT}/tcp
 COPY docker-entrypoint.sh /
 RUN sudo chmod +x /docker-entrypoint.sh
 
+
+RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
+RUN sudo rm -rf /tmp/*
+
 RUN mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
 RUN mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD
 
