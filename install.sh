@@ -5,23 +5,18 @@ if [ "$(whoami)" = "root" ]; then
   exit 1
 fi
 
-steam_user=steam
-if getent passwd "$steam_user" >/dev/null 2>&1; then
-    echo "User $steam_user exists."
-else
-    echo "User $steam_user does not exist.Adding $steam_user ..."
-    sudo useradd -m -s /bin/bash $steam_user
-fi
+steam_user=$(whoami)
+
+echo "The current user being used is $steam_user"
 
 echo "Installing SteamCMD..."
-
 sudo add-apt-repository multiverse -y
 sudo dpkg --add-architecture i386
 sudo apt update -y
 sudo apt-get remove needrestart -y
 
-echo steam steam/license note '' | sudo debconf-set-selections 
-echo steam steam/question select "I AGREE" | sudo debconf-set-selections 
+echo steam steam/license note '' | sudo debconf-set-selections
+echo steam steam/question select "I AGREE" | sudo debconf-set-selections
 sudo apt install steamcmd -y
 
 steam_user_path=~steam

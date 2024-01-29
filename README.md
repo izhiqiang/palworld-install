@@ -3,15 +3,25 @@
 - 服务器套餐配置：以CPU 4核、内存 16GB为例（通常可以满足6-8人同时在线联机）
 - 操作系统：Ubuntu 22.04 LTS
 
-#### 运行一键部署命令
+#### root用户
+
+~~~
+useradd -m -s /bin/bash steam
+echo 'steam ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+su steam
+~~~
+
+#### 运行部署命令
 
 登陆服务器执行shell命令进行幻兽帕鲁的部署。
 
 ```shell
 wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/install.sh|sh
-或
-wget -O - https://cdn.jsdelivr.net/gh/zzqqw/palworld-install@main/install.sh|sh
 ```
+或
+~~~
+wget -O - https://cdn.jsdelivr.net/gh/zzqqw/palworld-install@main/install.sh|sh
+~~~
 
 > **⚠️**注意
 >
@@ -46,7 +56,7 @@ sudo systemctl status pal-server
 1、复制并执行以下命令为配置文件增加权限，避免后续步骤中由于权限问题导致无法编辑。
 
 ~~~
-sudo chmod 777 /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo chmod 777 /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
 2、使用如下命令，将默认配置文件复制到幻兽帕鲁下的LinuxServer目录中：
@@ -54,14 +64,11 @@ sudo chmod 777 /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/Lin
 默认情况下，PalWorldSettings.ini文件是空的，手动配置的门槛很高，因此我们推荐在默认配置文件的基础上进行修改。
 
 ~~~
-sudo cp /home/steam/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo cp /home/$(whoami)/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
 3、使用如下命令打开游戏参数的配置文件：PalWorldSettings.ini。
 
 ~~~
-sudo vim /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo vim /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
-
-
-
