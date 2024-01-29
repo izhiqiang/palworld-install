@@ -5,9 +5,13 @@ if [ "$(whoami)" = "root" ]; then
   exit 1
 fi
 
-steam_user=$(whoami)
-
-echo "The current user being used is $steam_user"
+steam_user=steam
+if getent passwd "$steam_user" >/dev/null 2>&1; then
+    echo "User $steam_user exists."
+else
+    echo "User $steam_user does not exist.Adding $steam_user ..."
+    sudo useradd -m -s /bin/bash $steam_user
+fi
 
 echo "Installing SteamCMD..."
 sudo add-apt-repository multiverse -y
@@ -64,9 +68,3 @@ then
 else
     echo -e "\nThere were some problems with the installation, please check the log."
 fi
-
-echo "Installing zram..."
-sudo apt-get install zram-config -y
-
-sleep 1
-sudo systemctl start zram-config.service
