@@ -18,6 +18,7 @@ services:
       - SERVER_PASSWORD=
       - RCON_ENABLED=false
       - RCON_PORT=25575
+      - FORCE_UPDATE=false
       - CLI_ARGS="-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS"
     volumes:
       - /etc/localtime:/etc/localtime:ro

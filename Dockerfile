@@ -18,6 +18,7 @@ ENV ADMIN_PASSWORD=steam
 ENV SERVER_PASSWORD=""
 ENV RCON_ENABLED=false
 ENV RCON_PORT=25575
+ENV FORCE_UPDATE=false
 
 # 切换到steam用户
 USER steam
@@ -29,8 +30,8 @@ RUN sudo add-apt-repository multiverse && sudo dpkg --add-architecture i386 \
     && sudo apt-get update && sudo apt-get install -y steamcmd
 
 RUN mkdir -p ~/.steam/sdk64
-RUN  /usr/games/steamcmd +login anonymous +app_update 1007 validate +quit
-RUN  /usr/games/steamcmd +login anonymous +app_update 2394010 validate +quit
+RUN /usr/games/steamcmd +login anonymous +app_update 1007 validate +quit
+RUN /usr/games/steamcmd +login anonymous +app_update 2394010 validate +quit
 
 RUN sudo cp /home/steam/Steam/steamapps/common/Steamworks\ SDK\ Redist/linux64/steamclient.so /home/steam/.steam/sdk64/
 

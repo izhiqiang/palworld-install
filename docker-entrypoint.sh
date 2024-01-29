@@ -2,6 +2,10 @@
 
 set -e
 
+if [[ -n $FORCE_UPDATE ]] && [[ $FORCE_UPDATE == "true" ]]; then
+    /usr/games/steamcmd +login anonymous +app_update 2394010 validate +quit
+fi
+
 if [[ ! -f /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini ]]; then
     sudo mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/
     sudo cp /home/steam/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
