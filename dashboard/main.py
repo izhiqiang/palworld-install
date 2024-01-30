@@ -1,5 +1,4 @@
 import logging
-import secrets
 import uvicorn
 from fastapi import FastAPI, Request, HTTPException, Depends, status
 from fastapi.responses import HTMLResponse
@@ -45,7 +44,9 @@ def middleware_http_basic(credentials: HTTPBasicCredentials = Depends(security))
 async def index(request: Request, username: str = Depends(middleware_http_basic)):
     palWorldSettings = PalWorldSettings()
     form = palWorldSettings.RenderForm()
-    return templates.TemplateResponse("config.html", {"request": request, "form": form})
+    return templates.TemplateResponse("config.html", {"request": request,
+                                                      "form": form,
+                                                      "palWorldSettingsFile": palWorldSettings.palWorldSettingsFile})
 
 
 @app.post("/config")
@@ -54,7 +55,10 @@ async def index(request: Request, username: str = Depends(middleware_http_basic)
     palWorldSettings = PalWorldSettings()
     palWorldSettings.WriteConfig(dict(form_data))
     form = palWorldSettings.RenderForm()
-    return templates.TemplateResponse("config.html", {"request": request, "form": form, "code": 200})
+    return templates.TemplateResponse("config.html", {"request": request,
+                                                      "form": form,
+                                                      "palWorldSettingsFile": palWorldSettings.palWorldSettingsFile,
+                                                      "code": 200})
 
 
 if __name__ == "__main__":

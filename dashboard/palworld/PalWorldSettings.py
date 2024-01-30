@@ -22,11 +22,12 @@ class PalWorldSettings(object):
             "BanListURL"
         ]
         logging.debug("Fields that need to be processed as strings when writing files %s", self.strList)
-        palWorldSettingsIniFile = util.osnvironget("PalServerPath")
-        if palWorldSettingsIniFile is not None:
-            self.palWorldSettingsIniFile = palWorldSettingsIniFile
+        palServerPath = util.osnvironget("PalServerPath")
+        if palServerPath is not None:
+            self.palWorldSettingsFile = os.path.join(palServerPath, "Pal", "Saved", "Config",
+                                                     "LinuxServer", palWorldSettingsINIFile)
         else:
-            self.palWorldSettingsIniFile = "./PalWorldSettings.ini"
+            self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
         formjson = util.osnvironget("RestartCommand")
         if formjson is not None:
             self.formjson = formjson
@@ -56,10 +57,10 @@ class PalWorldSettings(object):
 
     # 读取配置项
     def ReadOptionSettings(self):
-        if not os.path.exists(self.palWorldSettingsIniFile):
+        if not os.path.exists(self.palWorldSettingsFile):
             logging.error("Unable to find %s file", self.formjson)
             return None
-        with open(self.palWorldSettingsIniFile, 'r', encoding='utf-8') as file:
+        with open(self.palWorldSettingsFile, 'r', encoding='utf-8') as file:
             content = file.read()
             options = {}
             pattern = r"\(([\w\W]*?)\)"
@@ -73,16 +74,16 @@ class PalWorldSettings(object):
 
     # 写入配置文件
     def WriteConfig(self, optionSettings):
-        if not os.path.exists(self.palWorldSettingsIniFile):
+        if not os.path.exists(self.palWorldSettingsFile):
             logging.error("Unable to find %s file", self.formjson)
             return None
         form = self.RenderForm()
         if form is None:
             return None
-        bakConfigFile = self.palWorldSettingsIniFile + "." + format(int(time.time()))
+        bakConfigFile = self.palWorldSettingsFile + "." + format(int(time.time()))
         logging.warning("Back up configuration files to %s", bakConfigFile)
-        copyfile(self.palWorldSettingsIniFile, bakConfigFile)
-        with open(self.palWorldSettingsIniFile, 'w', encoding='utf-8') as file:
+        copyfile(self.palWorldSettingsFile, bakConfigFile)
+        with open(self.palWorldSettingsFile, 'w', encoding='utf-8') as file:
             file.write("[/Script/Pal.PalGameWorldSettings]\n")
             file.write("OptionSettings=(")
             for key, value in optionSettings.items():
