@@ -5,6 +5,8 @@ import re
 import time
 from shutil import copyfile
 
+import util
+
 palWorldSettingsINIFile = "PalWorldSettings.ini"
 
 
@@ -20,10 +22,16 @@ class PalWorldSettings(object):
             "BanListURL"
         ]
         logging.debug("Fields that need to be processed as strings when writing files %s", self.strList)
-        self.palWorldSettingsIniFile = os.path.join(os.environ.get("PalServerPath"), "Pal", "Saved", "Config",
-                                                    "LinuxServer", palWorldSettingsINIFile)
-
-        self.formjson = os.environ.get("FormJSONPalWorldSettings")
+        palWorldSettingsIniFile = util.osnvironget("PalServerPath")
+        if palWorldSettingsIniFile is not None:
+            self.palWorldSettingsIniFile = palWorldSettingsIniFile
+        else:
+            self.palWorldSettingsIniFile = "./PalWorldSettings.ini"
+        formjson = util.osnvironget("RestartCommand")
+        if formjson is not None:
+            self.formjson = formjson
+        else:
+            self.formjson = "./form/PalWorldSettings.json"
 
     # 读取form数据
     def readForm(self):
@@ -88,7 +96,6 @@ class PalWorldSettings(object):
             file.seek(file.tell() - 1, 0)
             file.write(")")
         # 重启服务
-        restartcmd = os.environ.get("RestartCommand")
+        restartcmd = util.osnvironget("RestartCommand")
         if restartcmd is not None:
-            if restartcmd != "":
-                logging.warning("Restarting server %s log %s", restartcmd, os.system(restartcmd))
+            logging.warning("Restarting server %s log %s", restartcmd, os.system(restartcmd))

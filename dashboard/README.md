@@ -19,6 +19,10 @@ PalServerPath=/home/steam/Steam/steamapps/common/PalServer/
 FormJSONPalWorldSettings=./form/PalWorldSettings.json
 //修改完成之后，重启服务命令
 RestartCommand="sudo systemctl restart pal-server"
+//登陆账号
+BasicUser="zzqqw"
+// 登陆密码
+BasicPwd="123456"
 ~~~
 
 > PalWorldSettings.ini
