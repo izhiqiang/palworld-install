@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto、Jacob Thornton 以及众多 Bootstrap 贡献者">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>幻兽帕鲁服务器设定</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/gh/twbs/bootstrap@v4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Favicons -->
+    <style>
+
+    </style>
+</head>
+
+<body class="bg-light">
+
+<div class="container">
+    {% if code == 200 %}
+        <div class="alert alert-success">成功！您已经成功完成配置。</div>
+    {% elif code == 201 %}
+        <div class="alert alert-danger">错误！配置文件修改失败。</div>
+    {% else %}
+    {% endif %}
+
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://v4.bootcss.com/docs/4.6/assets/brand/bootstrap-solid.svg" alt=""
+             width="72" height="72">
+        <h2>幻兽帕鲁服务器设定</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+            <form class="needs-validation" method="post" action="/config">
+                {% for field,item in form.items() %}
+                    <div class="mb-3">
+                        <label for='{{ field }}'>{{ item.description }} ({{ field }})</label>
+                        {% if item.type == "select" %}
+                            <select name="{{ field }}" class="custom-select d-block w-100" id='{{ field }}'>
+                                {% for f,v in item.option.items() %}
+                                    {% if f == item.default %}
+                                        <option value="{{ f }}" selected>{{ v }}</option>
+                                    {% else %}
+                                        <option value="{{ f }}">{{ v }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <input type="text" name="{{ field }}" class="form-control" id='{{ field }}'
+                                   value="{{ item.default }}">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">提交配置</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://github.com/zzqqw/palworld-install/blob/main/install.sh">install.sh</a>
+            </li>
+            <li class="list-inline-item"><a href="https://hub.docker.com/r/zhiqiangwang/palworld-server">docker</a></li>
+            <li class="list-inline-item"><a
+                    href="https://github.com/zzqqw/palworld-install/blob/main/docker-compose.yml">docker-compose</a>
+            </li>
+        </ul>
+    </footer>
+</div>
+</body>
+</html>

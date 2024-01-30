@@ -1,0 +1,337 @@
+{
+  "Difficulty": {
+    "type": "select",
+    "option": {
+      "1": "正常",
+      "2": "休闲",
+      "3": "困难"
+    },
+    "description": "游戏难度"
+  },
+  "DayTimeSpeedRate": {
+    "type": "text",
+    "description": "白天流逝速度"
+  },
+  "NightTimeSpeedRate": {
+    "type": "text",
+    "description": "夜晚流逝速度"
+  },
+  "ExpRate": {
+    "type": "text",
+    "description": "经验获取倍率"
+  },
+  "PalCaptureRate": {
+    "type": "text",
+    "description": "帕鲁捕捉概率倍率"
+  },
+  "PalSpawnNumRate": {
+    "type": "text",
+    "description": "帕鲁出现数量倍率"
+  },
+  "PalDamageRateAttack": {
+    "type": "text",
+    "description": "帕鲁攻击伤害倍率"
+  },
+  "PalDamageRateDefense": {
+    "type": "text",
+    "description": "帕鲁防御伤害倍率"
+  },
+  "PlayerDamageRateAttack": {
+    "type": "text",
+    "description": "玩家攻击伤害倍率"
+  },
+  "PlayerDamageRateDefense": {
+    "type": "text",
+    "description": "玩家防御伤害倍率"
+  },
+  "PlayerStomachDecreaceRate": {
+    "type": "text",
+    "description": "玩家饱食度降低倍率"
+  },
+  "PlayerStaminaDecreaceRate": {
+    "type": "text",
+    "description": "玩家体力降低倍率"
+  },
+  "PlayerAutoHPRegeneRate": {
+    "type": "text",
+    "description": "玩家生命恢复倍率"
+  },
+  "PlayerAutoHpRegeneRateInSleep": {
+    "type": "text",
+    "description": "玩家睡眠生命恢复倍率"
+  },
+  "PalStomachDecreaceRate": {
+    "type": "text",
+    "description": "帕鲁饱食度降低倍率"
+  },
+  "PalStaminaDecreaceRate": {
+    "type": "slider",
+    "description": "帕鲁体力降低倍率"
+  },
+  "PalAutoHPRegeneRate": {
+    "type": "text",
+    "description": "帕鲁生命恢复倍率"
+  },
+  "PalAutoHpRegeneRateInSleep": {
+    "type": "text",
+    "description": "帕鲁睡眠生命恢复倍率"
+  },
+  "BuildObjectDamageRate": {
+    "type": "text",
+    "description": "建筑物伤害倍率"
+  },
+  "BuildObjectDeteriorationDamageRate": {
+    "type": "text",
+    "description": "建筑劣化速度"
+  },
+  "CollectionDropRate": {
+    "type": "text",
+    "description": "资源掉落倍率"
+  },
+  "CollectionObjectHpRate": {
+    "type": "text",
+    "description": "可收集物品生命值倍率"
+  },
+  "CollectionObjectRespawnSpeedRate": {
+    "type": "text",
+    "description": "可收集物品刷新速率"
+  },
+  "EnemyDropItemRate": {
+    "type": "text",
+    "description": "敌人掉落物品倍率"
+  },
+  "DeathPenalty": {
+    "type": "select",
+    "option": {
+      "None": "无惩罚",
+      "Item": "只掉物品",
+      "ItemAndEquipment": "掉物品和装备",
+      "All": "全部掉落"
+    },
+    "description": "死亡惩罚"
+  },
+  "DropItemMaxNum": {
+    "type": "text",
+    "description": "世界掉落物品上限"
+  },
+  "DropItemMaxNum_UNKO": {
+    "type": "text",
+    "description": "帕鲁粪便掉落上限"
+  },
+  "BaseCampMaxNum": {
+    "type": "text",
+    "description": "基地数量上限"
+  },
+  "BaseCampWorkerMaxNum": {
+    "type": "text",
+    "description": "基地工作帕鲁上限"
+  },
+  "DropItemAliveMaxHours": {
+    "type": "text",
+    "description": "掉落物存在时长"
+  },
+  "GuildPlayerMaxNum": {
+    "type": "text",
+    "description": "公会成员上限"
+  },
+  "PalEggDefaultHatchingTime": {
+    "type": "text",
+    "description": "帕鲁蛋孵化时间"
+  },
+  "WorkSpeedRate": {
+    "type": "text",
+    "description": "工作速率"
+  },
+  "bEnablePlayerToPlayerDamage": {
+    "type": "select",
+    "description": "启用玩家互殴",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableFriendlyFire": {
+    "type": "select",
+    "description": "启用友伤",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableInvaderEnemy": {
+    "type": "select",
+    "description": "启用敌人入侵",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bActiveUNKO": {
+    "type": "select",
+    "description": "启用帕鲁粪便",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableAimAssistPad": {
+    "type": "select",
+    "description": "启用游戏手柄辅助瞄准",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableAimAssistKeyboard": {
+    "type": "select",
+    "description": "启用键盘辅助瞄准",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bAutoResetGuildNoOnlinePlayers": {
+    "type": "select",
+    "description": "无玩家时重置公会",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "AutoResetGuildTimeNoOnlinePlayers": {
+    "type": "text",
+    "description": "重置公会时间(小时)"
+  },
+  "bIsMultiplay": {
+    "type": "select",
+    "description": "启用多人游戏",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bIsPvP": {
+    "type": "select",
+    "description": "启用PvP",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bCanPickupOtherGuildDeathPenaltyDrop": {
+    "type": "select",
+    "description": "可以拾取其他公会死亡掉落",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableNonLoginPenalty": {
+    "type": "select",
+    "description": "启用不登录惩罚",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableFastTravel": {
+    "type": "select",
+    "description": "启用快速移动",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bIsStartLocationSelectByMap": {
+    "type": "select",
+    "description": "启用地图选择初始位置",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bExistPlayerAfterLogout": {
+    "type": "select",
+    "description": "注销后保留玩家",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "bEnableDefenseOtherGuildPlayer": {
+    "type": "select",
+    "description": "启用防御其他公会玩家",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "CoopPlayerMaxNum": {
+    "type": "text",
+    "description": "邀请码最大玩家数"
+  },
+  "ServerPlayerMaxNum": {
+    "type": "text",
+    "description": "服务器最大玩家数"
+  },
+  "ServerName": {
+    "type": "text",
+    "description": "服务器名称"
+  },
+  "ServerDescription": {
+    "type": "text",
+    "description": "服务器简介"
+  },
+  "AdminPassword": {
+    "type": "text",
+    "description": "管理员密码"
+  },
+  "ServerPassword": {
+    "type": "text",
+    "description": "服务器密码"
+  },
+  "PublicPort": {
+    "type": "text",
+    "description": "对外端口"
+  },
+  "PublicIP": {
+    "type": "text",
+    "description": "服务器IP"
+  },
+  "RCONEnabled": {
+    "type": "text",
+    "description": "启用RCON"
+  },
+  "RCONPort": {
+    "type": "text",
+    "description": "RCON端口"
+  },
+  "Region": {
+    "type": "text",
+    "description": "服务器地区"
+  },
+  "bUseAuth": {
+    "type": "select",
+    "description": "使用授权验证",
+    "option": {
+      "True": "True",
+      "False": "False"
+    }
+  },
+  "BanListURL": {
+    "type": "text",
+    "description": "封禁名单链接"
+  },
+  "PlayerStomachDecreaseRate": {
+    "type": "text",
+    "description": "玩家胃口下降率"
+  },
+  "PlayerStaminaDecreaseRate": {
+    "type": "text",
+    "description": "玩家耐力下降率"
+  },
+  "PalStomachDecreaseRate": {
+    "type": "text",
+    "description": "宠物胃口下降率"
+  }
+}
