@@ -87,6 +87,12 @@ sudo cp /home/steam/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini
 sudo vim /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
+#### 备份数据
+
+~~~
+tar -cvf backup_saved.tar /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+~~~
+
 #### 配置zram提高系统内存使用率，减少物理磁盘读写
 
 ~~~
