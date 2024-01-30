@@ -55,6 +55,13 @@ sudo systemctl stop pal-server
 sudo systemctl status pal-server
 ~~~
 
+#### 强制更新
+
+~~~
+sudo -u steam steamcmd_path +login anonymous +app_update 2394010 validate +quit
+sudo systemctl restart pal-server
+~~~
+
 #### 开放端口8211
 
 幻兽帕鲁默认使用8211端口进行通信，进入服务商放通8211端口，协议UDP
@@ -63,7 +70,7 @@ sudo systemctl status pal-server
 1、复制并执行以下命令为配置文件增加权限，避免后续步骤中由于权限问题导致无法编辑。
 
 ~~~
-sudo chmod 777 /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo chmod 777 /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
 2、使用如下命令，将默认配置文件复制到幻兽帕鲁下的LinuxServer目录中：
@@ -71,13 +78,13 @@ sudo chmod 777 /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config
 默认情况下，PalWorldSettings.ini文件是空的，手动配置的门槛很高，因此我们推荐在默认配置文件的基础上进行修改。
 
 ~~~
-sudo cp /home/$(whoami)/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo cp /home/steam/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
 3、使用如下命令打开游戏参数的配置文件：PalWorldSettings.ini。
 
 ~~~
-sudo vim /home/$(whoami)/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+sudo vim /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ~~~
 
 #### 配置zram提高系统内存使用率，减少物理磁盘读写
