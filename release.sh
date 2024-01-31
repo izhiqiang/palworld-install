@@ -16,10 +16,10 @@ echo "Submit Docker Image"
 # 登录仓库
 docker login -u $DOCKER_USER -p $DOCKER_PWD
 # 构建仓库
-docker build -t zhiqiangwang/palworld-server:latest  .
+docker build -f Dockerfile.base -t zhiqiangwang/palworld-server:base  .
 # 发布仓库
 echo "Release Docker Version: " $version
-docker push zhiqiangwang/palworld-server:latest
+docker push zhiqiangwang/palworld-server:base
 
 echo "Submit the latest code"
 # 更新代码

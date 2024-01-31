@@ -1,0 +1,20 @@
+# docker build -f Dockerfile.dashboard -t zhiqiangwang/palworld-server:dashboard  .
+# docker run -it --name py --rm   zhiqiangwang/palworld-server:dashboard sh
+
+FROM python:3.10-alpine
+RUN mkdir -p /code
+WORKDIR /code
+
+ADD dashboard/ .
+
+RUN rm -rf .env
+ENV PalServerPath=/home/steam/Steam/steamapps/common/PalServer2/
+ENV FormJSONPalWorldSettings=./form/PalWorldSettings.json
+ENV BasicUser=zzqqw
+ENV BasicPwd=123456
+
+RUN python3 -m pip install -r /code/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+EXPOSE 8000
+
+CMD python3 main.py
