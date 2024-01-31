@@ -13,7 +13,7 @@ ENV RESTARTPALSERVER_COMMAND=""
 ENV DASHBOARD_BASICUSER="dashboard"
 ENV DASHBOARD_BASICPWD="123456"
 
-RUN python3 -m pip install -r /code/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN python3 -m pip install -r /code/requirements.txt
 
 EXPOSE 8000
 

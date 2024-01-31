@@ -29,4 +29,7 @@ if [[ ! -f /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxSe
     fi
 fi
 
+sudo chmod 777 /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+sudo chown -R steam:steam /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+
 /home/steam/Steam/steamapps/common/PalServer/PalServer.sh port="$PORT" "$CLI_ARGS"
