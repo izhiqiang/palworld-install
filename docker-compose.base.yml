@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   dedicated-server:
-    image: zhiqiangwang/palworld-server:latest
+    image: zhiqiangwang/palworld-server:base
     # build: # only use in test
     #   context: .
     restart: unless-stopped

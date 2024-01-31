@@ -24,11 +24,11 @@ security = HTTPBasic()
 # 验证中间件
 def middleware_http_basic(credentials: HTTPBasicCredentials = Depends(security)):
     current_username = credentials.username
-    user = util.osnvironget("BasicUser")
+    user = util.osnvironget("DASHBOARD_BASICUSER")
     if user is None:
-        user = "zzqqw"
+        user = "dashboard"
     current_password = credentials.password
-    pwd = util.osnvironget("BasicPwd")
+    pwd = util.osnvironget("DASHBOARD_BASICPWD")
     if pwd is None:
         pwd = "123456"
     if current_password == pwd and current_username == user:

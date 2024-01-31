@@ -41,12 +41,12 @@ COPY docker-entrypoint.sh /
 RUN sudo chmod +x /docker-entrypoint.sh
 
 # 守护进程
-COPY supervisor.conf /etc/supervisor/conf.d/palworld.conf
+COPY ./conf/supervisor.base.conf /etc/supervisor/conf.d/palworld.conf
 RUN sudo chmod 777 /etc/supervisor/
 RUN sudo chmod 777 /run/
 
-RUN mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
-RUN mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD
+RUN sudo mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+RUN sudo mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD
 
 VOLUME [ "/home/steam/Steam/steamapps/common/PalServer/Pal/Saved", "/home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD" ]
 

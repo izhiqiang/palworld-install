@@ -5,7 +5,7 @@ version: "3.9"
 
 services:
   dedicated-server:
-    image: zhiqiangwang/palworld-server:latest
+    image: zhiqiangwang/palworld-server:base
     restart: unless-stopped
     network_mode: bridge
     ports:

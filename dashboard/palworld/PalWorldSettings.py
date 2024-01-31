@@ -22,13 +22,13 @@ class PalWorldSettings(object):
             "BanListURL"
         ]
         logging.debug("Fields that need to be processed as strings when writing files %s", self.strList)
-        palServerPath = util.osnvironget("PalServerPath")
+        palServerPath = util.osnvironget("PALSERVERPATH")
         if palServerPath is not None:
             self.palWorldSettingsFile = os.path.join(palServerPath, "Pal", "Saved", "Config",
                                                      "LinuxServer", palWorldSettingsINIFile)
         else:
             self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
-        formjson = util.osnvironget("RestartCommand")
+        formjson = util.osnvironget("FORMJSON_PALWORLDSETTINGS")
         if formjson is not None:
             self.formjson = formjson
         else:
@@ -97,6 +97,6 @@ class PalWorldSettings(object):
             file.seek(file.tell() - 1, 0)
             file.write(")")
         # 重启服务
-        restartcmd = util.osnvironget("RestartCommand")
+        restartcmd = util.osnvironget("RESTARTPALSERVER_COMMAND")
         if restartcmd is not None:
             logging.warning("Restarting server %s log %s", restartcmd, os.system(restartcmd))

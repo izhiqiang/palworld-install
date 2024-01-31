@@ -12,7 +12,8 @@
 ~~~
 git clone https://github.com/zzqqw/palworld-install.git
 cd palworld-install
-docker-compose up -d
+//单独启动
+docker-compose -f docker-compose.base.yml up -d
 ~~~
 
 #### **一键脚本部署环境**
