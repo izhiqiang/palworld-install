@@ -1,13 +1,20 @@
-#### 服务器配置推荐
+## 国际化
 
-| 人数     | 配置    |
-| -------- | ------- |
-| 4～8     | 4核16G  |
-| 10～20人 | 8核32G  |
-| 16～24   | 16核32G |
-| 32人     | 16核64G |
+- [中文文档](./README.md)
+- [英文文档](./README.EN.md)
 
-#### Dokcer环境
+## 服务器配置推荐
+
+| 人数   | 推荐配置 |
+| ------ | -------- |
+| 4～8   | 4核16G   |
+| 10～20 | 8核32G   |
+| 16～24 | 16核32G  |
+| 32     | 16核64G  |
+
+## 获取方式
+
+### Dokcer环境
 
 ~~~
 git clone https://github.com/zzqqw/palworld-install.git
@@ -16,41 +23,16 @@ cd palworld-install
 docker-compose -f docker-compose.base.yml up -d
 ~~~
 
-#### **一键脚本部署环境**
-- 服务器套餐配置：以CPU 4核、内存 16GB为例（通常可以满足6-8人同时在线联机）
-- 操作系统：Ubuntu 22.04 LTS
-
-#### root用户
-
-~~~
-useradd -m -s /bin/bash steam
-echo 'steam ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-su steam
-~~~
-
-#### 运行部署命令
-
-登陆服务器执行shell命令进行幻兽帕鲁的部署。
+### **一键脚本部署环境**
+> - 服务器套餐配置：以CPU 4核、内存 16GB为例（通常可以满足6-8人同时在线联机）
+> - 操作系统：Ubuntu 22.04 LTS
 
 ```shell
 wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/install.sh|sh
 ```
-或
 ~~~
 wget -O - https://cdn.jsdelivr.net/gh/zzqqw/palworld-install@main/install.sh|sh
 ~~~
-
-> **⚠️**注意
->
-> 1. 有可能因为网络原因导致脚本运行失败，建议您多次重试或换个时间段再次部署。此处的原因主要是安装过程中需要请求Steam的服务器，网络连接状况可能不稳定。
->
-> 2. 非root账号执行
-
-一键部署脚本执行成功后，会在服务器中创建一个名为`pal-server`的服务，您可以使用如下命令检查服务是否正常启动，如出现图示的效果，则证明服务器已经部署成功。
-
-```shell
-sudo systemctl status pal-server
-```
 
 如果您后续想管理该服务，可以参考以下命令来进行：
 
@@ -103,7 +85,9 @@ sudo vim /home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServ
 tar -cvf backup_saved.tar /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
 ~~~
 
-#### 配置zram提高系统内存使用率，减少物理磁盘读写
+## 服务器优化
+
+### 配置zram提高系统内存使用率，减少物理磁盘读写
 
 ~~~
 sudo apt update -y
@@ -111,7 +95,7 @@ sudo apt-get install zram-config -y
 sudo systemctl start zram-config.service
 ~~~
 
-#### 配置Swap
+### 配置Swap
 
 ~~~
 //创建一个swap文件
@@ -130,10 +114,12 @@ sudo swapon --all
 swapon --show
 ~~~
 
-#### 监控内存占用并在占用比例达到 90% 时自动重启
+## 常用脚本
+
+### 监控内存占用并在占用比例达到 90% 时自动重启
 
 ~~~
-cd ~/auto_restart.sh
+cd ~
 wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/auto_restart.sh
 * * * * * /bin/bash ~/auto_restart.sh > /dev/null 2>&1
 ~~~
