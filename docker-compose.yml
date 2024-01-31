@@ -11,6 +11,8 @@ services:
       - 8211:8211/udp
       # - 25575:25575/tcp # only use in RCON_ENABLED=true
     environment:
+      - DASHBOARD_BASICUSER=dashboard
+      - DASHBOARD_BASICPWD=123456
       - PORT=8211
       - SERVER_NAME=Default Palworld Server
       - SERVER_DESC=Default Palworld Server
