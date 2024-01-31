@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 RUN apt update
 
 # 安装需要的依赖
-RUN apt-get update && apt-get install -y sudo software-properties-common
+RUN apt-get update && apt-get install -y sudo software-properties-common supervisor
 
 # 添加steam用户
 RUN useradd -m -s /bin/bash steam && \
@@ -40,13 +40,17 @@ EXPOSE ${PORT}/udp ${RCON_PORT}/tcp
 COPY docker-entrypoint.sh /
 RUN sudo chmod +x /docker-entrypoint.sh
 
-
-RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
-RUN sudo rm -rf /tmp/*
+# 守护进程
+COPY supervisor.conf /etc/supervisor/conf.d/palworld.conf
+RUN sudo chmod 777 /etc/supervisor/
+RUN sudo chmod 777 /run/
 
 RUN mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
 RUN mkdir -p /home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD
 
 VOLUME [ "/home/steam/Steam/steamapps/common/PalServer/Pal/Saved", "/home/steam/Steam/steamapps/common/PalServer/Pal/Content/Paks/MOD" ]
 
-ENTRYPOINT [ "/docker-entrypoint.sh" ]
+RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
+RUN sudo rm -rf /tmp/*
+
+CMD ["supervisord", "-u", "steam", "-c", "/etc/supervisor/supervisord.conf"]
