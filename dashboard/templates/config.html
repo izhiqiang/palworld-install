@@ -23,6 +23,8 @@
         <div class="alert alert-success">成功！您已经成功完成配置。</div>
     {% elif code == 201 %}
         <div class="alert alert-danger">错误！配置文件修改失败。</div>
+    {% elif code == 500 %}
+        <div class="alert alert-danger">严重错误！配置文件加载失败</div>
     {% else %}
     {% endif %}
 

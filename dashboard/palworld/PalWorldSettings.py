@@ -28,6 +28,7 @@ class PalWorldSettings(object):
                                                      "LinuxServer", palWorldSettingsINIFile)
         else:
             self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
+        # self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
         formjson = util.osnvironget("FORMJSON_PALWORLDSETTINGS")
         if formjson is not None:
             self.formjson = formjson
@@ -35,31 +36,30 @@ class PalWorldSettings(object):
             self.formjson = "./form/PalWorldSettings.json"
 
     # 读取form数据
-    def readForm(self):
+    def readFormJSON(self):
         if not os.path.exists(self.formjson):
             logging.error("Unable to find %s file", self.formjson)
-            return None
+            raise FileNotFoundError
         with open(self.formjson, 'r') as file:
             return json.load(file)
 
     # 渲染前端模版参数
     def RenderForm(self):
-        form = self.readForm()
+        form = self.readFormJSON()
         optionSettings = self.ReadOptionSettings()
-        if form is not None:
-            if optionSettings is not None:
-                for key, value in optionSettings.items():
-                    if key in form:
-                        form[key]["default"] = value
-                    else:
-                        logging.warning("The `%s` data type is not defined in the %s file", key, self.formjson)
+        if optionSettings is not None:
+            for key, value in optionSettings.items():
+                if key in form:
+                    form[key]["default"] = value
+                else:
+                    logging.warning("The `%s` data type is not defined in the %s file", key, self.formjson)
         return form
 
     # 读取配置项
     def ReadOptionSettings(self):
         if not os.path.exists(self.palWorldSettingsFile):
             logging.error("Unable to find %s file", self.formjson)
-            return None
+            raise FileNotFoundError
         with open(self.palWorldSettingsFile, 'r', encoding='utf-8') as file:
             content = file.read()
             options = {}
@@ -75,11 +75,9 @@ class PalWorldSettings(object):
     # 写入配置文件
     def WriteConfig(self, optionSettings):
         if not os.path.exists(self.palWorldSettingsFile):
-            logging.error("Unable to find %s file", self.formjson)
-            return None
-        form = self.RenderForm()
-        if form is None:
-            return None
+            logging.error("Unable to find %s file", self.palWorldSettingsFile)
+            raise FileNotFoundError
+        form = self.readFormJSON()
         bakConfigFile = self.palWorldSettingsFile + "." + format(int(time.time()))
         logging.warning("Back up configuration files to %s", bakConfigFile)
         copyfile(self.palWorldSettingsFile, bakConfigFile)

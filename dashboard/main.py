@@ -14,7 +14,7 @@ load_dotenv()
 # 日志级别
 logging.basicConfig(level=logging.DEBUG)
 # 初始化fastapi
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 # 初始化模版
 templates = Jinja2Templates(directory="templates")
 # 登陆验证
@@ -42,23 +42,42 @@ def middleware_http_basic(credentials: HTTPBasicCredentials = Depends(security))
 
 @app.get("/config", response_class=HTMLResponse)
 async def index(request: Request, username: str = Depends(middleware_http_basic)):
-    palWorldSettings = PalWorldSettings()
-    form = palWorldSettings.RenderForm()
-    return templates.TemplateResponse("config.html", {"request": request,
-                                                      "form": form,
-                                                      "palWorldSettingsFile": palWorldSettings.palWorldSettingsFile})
+    try:
+        palWorldSettings = PalWorldSettings()
+        form = palWorldSettings.RenderForm()
+        palWorldSettingsFile = palWorldSettings.palWorldSettingsFile
+        code = 100
+    except:
+        form = {}
+        palWorldSettingsFile = ""
+        code = 500
+    return templates.TemplateResponse("config.html", {
+        "request": request,
+        "form": form,
+        "palWorldSettingsFile": palWorldSettingsFile,
+        "code": code,
+    })
 
 
 @app.post("/config")
 async def index(request: Request, username: str = Depends(middleware_http_basic)):
     form_data = await request.form()
-    palWorldSettings = PalWorldSettings()
-    palWorldSettings.WriteConfig(dict(form_data))
-    form = palWorldSettings.RenderForm()
-    return templates.TemplateResponse("config.html", {"request": request,
-                                                      "form": form,
-                                                      "palWorldSettingsFile": palWorldSettings.palWorldSettingsFile,
-                                                      "code": 200})
+    try:
+        palWorldSettings = PalWorldSettings()
+        palWorldSettings.WriteConfig(dict(form_data))
+        form = palWorldSettings.RenderForm()
+        palWorldSettingsFile = palWorldSettings.palWorldSettingsFile
+        code = 200
+    except:
+        form = {}
+        palWorldSettingsFile = ""
+        code = 201
+    return templates.TemplateResponse("config.html", {
+        "request": request,
+        "form": form,
+        "palWorldSettingsFile": palWorldSettingsFile,
+        "code": code
+    })
 
 
 if __name__ == "__main__":
