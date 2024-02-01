@@ -5,6 +5,11 @@ import logging
 import os
 
 
+def dashboard_env() -> bool:
+    if osnvironget("DASHBOARD_ENVIRONMENT") is None:
+        return False
+    return True
+
 # 读取环境变量
 def osnvironget(env: str) -> str | None:
     val = os.environ.get(env)
@@ -36,5 +41,5 @@ def readJSONFile(file: str):
     if not os.path.exists(file):
         logging.error("Unable to find %s file", file)
         raise FileNotFoundError
-    with open(file, "r") as f2:
+    with open(file, "r",encoding='utf-8') as f2:
         return json.load(f2)

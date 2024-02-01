@@ -24,13 +24,11 @@ class PalWorldSettings(object):
 
         # palworld 游戏目录（然后凭借完整配置文件路径）
         palServerPath = util.osnvironget("PALSERVERPATH")
-        if palServerPath is not None:
+        if palServerPath is None or util.dashboard_env() is False:
+            self.palWorldSettingsFile = "./" + self.palWorldSettingsFileName
+        else:
             self.palWorldSettingsFile = os.path.join(palServerPath, "Pal", "Saved", "Config",
                                                      "LinuxServer", self.palWorldSettingsFileName)
-        else:
-            self.palWorldSettingsFile = "./" + self.palWorldSettingsFileName
-
-        # self.palWorldSettingsFile = "./" + self.palWorldSettingsFileName
 
         # 前端渲染form 表单json
         formjson = util.osnvironget("FORMJSON_PALWORLDSETTINGS")
@@ -46,9 +44,9 @@ class PalWorldSettings(object):
     def readFormJSON(self):
         return util.readJSONFile(self.formjson)
 
+    # 渲染提交按钮文字
     def readerSubmitButtonTitle(self) -> str:
-        env = util.osnvironget("DASHBOARD_CONFIG_BUTTON_TYPE")
-        if env is None:
+        if util.dashboard_env() is False:
             return "下载配置"
         else:
             return "提交配置"
@@ -82,6 +80,7 @@ class PalWorldSettings(object):
                 options.update({option: value})
             return options
 
+    # 返回配置文件内容
     def configStr(self, optionSettings: dict) -> str:
         if not os.path.exists(self.palWorldSettingsFile):
             logging.error("Unable to find %s file", self.palWorldSettingsFile)

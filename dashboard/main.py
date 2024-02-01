@@ -20,23 +20,29 @@ templates = Jinja2Templates(directory="templates")
 security = HTTPBasic()
 
 
-# 验证中间件
-def middleware_http_basic(credentials: HTTPBasicCredentials = Depends(security)):
-    current_username = credentials.username
-    user = util.osnvironget("DASHBOARD_BASICUSER")
-    if user is None:
-        user = "dashboard"
-    current_password = credentials.password
-    pwd = util.osnvironget("DASHBOARD_BASICPWD")
-    if pwd is None:
-        pwd = "123456"
-    if current_password == pwd and current_username == user:
-        return credentials.username
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Incorrect username or password",
-        headers={"WWW-Authenticate": "Basic"},
-    )
+# 登录验证中间件
+def middlewareHTTPBasic():
+    if util.dashboard_env() is False:
+        return Depends(HTTPBasic) 
+    else:
+        def verify(credentials: HTTPBasicCredentials = Depends(security)):
+            current_username = credentials.username
+            user = util.osnvironget("DASHBOARD_BASICUSER")
+            if user is None:
+                user = "dashboard"
+            current_password = credentials.password
+            pwd = util.osnvironget("DASHBOARD_BASICPWD")
+            if pwd is None:
+                pwd = "123456"
+            if current_password == pwd and current_username == user:
+                return credentials.username
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Basic"},
+            )
+        return Depends(verify)
+
 
 
 @app.get("/")
@@ -45,7 +51,7 @@ async def getConfig(request: Request):
 
 
 @app.get("/config", response_class=HTMLResponse)
-async def getConfig(request: Request, username: str = Depends(middleware_http_basic)):
+async def getConfig(request: Request, username: str = middlewareHTTPBasic()):
     palWorldSettings = PalWorldSettings()
     try:
         form = palWorldSettings.RenderForm()
@@ -66,7 +72,7 @@ async def getConfig(request: Request, username: str = Depends(middleware_http_ba
 
 
 @app.post("/config")
-async def postConfig(request: Request, username: str = Depends(middleware_http_basic)):
+async def postConfig(request: Request, username: str = middlewareHTTPBasic()):
     form_data = await request.form()
     palWorldSettings = PalWorldSettings()
     submitButtonTitle = palWorldSettings.readerSubmitButtonTitle()
