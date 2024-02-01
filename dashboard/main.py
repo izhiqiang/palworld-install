@@ -1,10 +1,9 @@
 import logging
 import uvicorn
 from fastapi import FastAPI, Request, HTTPException, Depends, status
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response, RedirectResponse
 from fastapi.security import HTTPBasicCredentials, HTTPBasic
 from fastapi.templating import Jinja2Templates
-
 import util
 from palworld.PalWorldSettings import PalWorldSettings
 from dotenv import load_dotenv
@@ -40,14 +39,20 @@ def middleware_http_basic(credentials: HTTPBasicCredentials = Depends(security))
     )
 
 
+@app.get("/")
+async def getConfig(request: Request):
+    return RedirectResponse(url="/config")
+
+
 @app.get("/config", response_class=HTMLResponse)
-async def index(request: Request, username: str = Depends(middleware_http_basic)):
+async def getConfig(request: Request, username: str = Depends(middleware_http_basic)):
+    palWorldSettings = PalWorldSettings()
     try:
-        palWorldSettings = PalWorldSettings()
         form = palWorldSettings.RenderForm()
         palWorldSettingsFile = palWorldSettings.palWorldSettingsFile
         code = 100
-    except:
+    except FileNotFoundError as e:
+        logging.error("rendering config template: %s", e)
         form = {}
         palWorldSettingsFile = ""
         code = 500
@@ -56,28 +61,49 @@ async def index(request: Request, username: str = Depends(middleware_http_basic)
         "form": form,
         "palWorldSettingsFile": palWorldSettingsFile,
         "code": code,
+        "submitbuttontitle": palWorldSettings.readerSubmitButtonTitle()
     })
 
 
 @app.post("/config")
-async def index(request: Request, username: str = Depends(middleware_http_basic)):
+async def postConfig(request: Request, username: str = Depends(middleware_http_basic)):
     form_data = await request.form()
+    palWorldSettings = PalWorldSettings()
+    submitButtonTitle = palWorldSettings.readerSubmitButtonTitle()
     try:
-        palWorldSettings = PalWorldSettings()
-        palWorldSettings.WriteConfig(dict(form_data))
+        configStr = palWorldSettings.configStr(dict(form_data))
         form = palWorldSettings.RenderForm()
         palWorldSettingsFile = palWorldSettings.palWorldSettingsFile
         code = 200
-    except:
+    except BaseException as e:
+        logging.error("submit to config: %s", e)
         form = {}
         palWorldSettingsFile = ""
         code = 201
-    return templates.TemplateResponse("config.html", {
-        "request": request,
-        "form": form,
-        "palWorldSettingsFile": palWorldSettingsFile,
-        "code": code
-    })
+        configStr = ""
+    if submitButtonTitle == "下载配置":
+        return Response(
+            content=configStr,
+            media_type="text/plain",
+            headers={
+                "Content-Disposition": f"attachment; filename=" + palWorldSettings.palWorldSettingsFileName
+            }
+        )
+    else:
+        try:
+            palWorldSettings.writeConfig(configStr)
+        except BaseException as e:
+            logging.error("writeConfig to config: %s", e)
+            form = {}
+            palWorldSettingsFile = ""
+            code = 201
+        return templates.TemplateResponse("config.html", {
+            "request": request,
+            "form": form,
+            "palWorldSettingsFile": palWorldSettingsFile,
+            "code": code,
+            "submitbuttontitle": submitButtonTitle
+        })
 
 
 if __name__ == "__main__":

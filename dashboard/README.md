@@ -60,6 +60,8 @@ pyinstaller -F -w -n palworld main.py
 ## 环境变量
 
 ~~~
+//当前的环境 （如果没有设置就表示下载，否者就是提交配置）
+DASHBOARD_CONFIG_BUTTON_TYPE="yes"
 //游戏安装目录
 PALSERVERPATH=/home/steam/Steam/steamapps/common/PalServer/
 //前端表单显示的input以及提交进行校验参数

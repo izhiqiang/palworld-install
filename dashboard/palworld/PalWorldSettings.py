@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 import re
@@ -7,10 +6,10 @@ from shutil import copyfile
 
 import util
 
-palWorldSettingsINIFile = "PalWorldSettings.ini"
-
 
 class PalWorldSettings(object):
+    palWorldSettingsFileName = "PalWorldSettings.ini"
+
     def __init__(self):
         self.strList = [
             "ServerName",
@@ -27,11 +26,11 @@ class PalWorldSettings(object):
         palServerPath = util.osnvironget("PALSERVERPATH")
         if palServerPath is not None:
             self.palWorldSettingsFile = os.path.join(palServerPath, "Pal", "Saved", "Config",
-                                                     "LinuxServer", palWorldSettingsINIFile)
+                                                     "LinuxServer", self.palWorldSettingsFileName)
         else:
-            self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
+            self.palWorldSettingsFile = "./" + self.palWorldSettingsFileName
 
-        # self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
+        # self.palWorldSettingsFile = "./" + self.palWorldSettingsFileName
 
         # 前端渲染form 表单json
         formjson = util.osnvironget("FORMJSON_PALWORLDSETTINGS")
@@ -45,11 +44,14 @@ class PalWorldSettings(object):
 
     # 读取form数据
     def readFormJSON(self):
-        if not os.path.exists(self.formjson):
-            logging.error("Unable to find %s file", self.formjson)
-            raise FileNotFoundError
-        with open(self.formjson, 'r') as file:
-            return json.load(file)
+        return util.readJSONFile(self.formjson)
+
+    def readerSubmitButtonTitle(self) -> str:
+        env = util.osnvironget("DASHBOARD_CONFIG_BUTTON_TYPE")
+        if env is None:
+            return "下载配置"
+        else:
+            return "提交配置"
 
     # 渲染前端模版参数
     def RenderForm(self):
@@ -80,28 +82,32 @@ class PalWorldSettings(object):
                 options.update({option: value})
             return options
 
-    # 写入配置文件
-    def WriteConfig(self, optionSettings):
+    def configStr(self, optionSettings: dict) -> str:
         if not os.path.exists(self.palWorldSettingsFile):
             logging.error("Unable to find %s file", self.palWorldSettingsFile)
             raise FileNotFoundError
         form = self.readFormJSON()
+        # 配置文件内容开始
+        content = "[/Script/Pal.PalGameWorldSettings]\n"
+        content += "OptionSettings=("
+        for key, value in optionSettings.items():
+            if key in form:
+                if key not in self.strList:
+                    content += f"{key}={value},"
+
+                else:
+                    content += f"{key}=\"{value}\","
+            else:
+                logging.warning("Skipping configuration %s when writing files", key)
+        return content[:-1] + ")"
+
+    # 写入配置文件
+    def writeConfig(self, configStr: str):
         bakConfigFile = self.palWorldSettingsFile + "." + format(int(time.time()))
         logging.warning("Back up configuration files to %s", bakConfigFile)
         copyfile(self.palWorldSettingsFile, bakConfigFile)
-        with open(self.palWorldSettingsFile, 'w', encoding='utf-8') as file:
-            file.write("[/Script/Pal.PalGameWorldSettings]\n")
-            file.write("OptionSettings=(")
-            for key, value in optionSettings.items():
-                if key in form:
-                    if key not in self.strList:
-                        file.write(f"{key}={value},")
-                    else:
-                        file.write(f"{key}=\"{value}\",")
-                else:
-                    logging.warning("Skipping configuration %s when writing files", key)
-            file.seek(file.tell() - 1, 0)
-            file.write(")")
+        # 将配置文件内容写入到文件中
+        util.writeFile(self.palWorldSettingsFile, configStr)
         # 重启服务
         if self.restartCommand is not None:
             logging.warning("Restarting server %s log %s", self.restartCommand, os.system(self.restartCommand))

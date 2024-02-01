@@ -12,6 +12,7 @@ ENV PALSERVERPATH=/home/steam/Steam/steamapps/common/PalServer/
 ENV RESTARTPALSERVER_COMMAND=""
 ENV DASHBOARD_BASICUSER="dashboard"
 ENV DASHBOARD_BASICPWD="123456"
+ENV DASHBOARD_CONFIG_BUTTON_TYPE="yes"
 
 RUN python3 -m pip install -r /code/requirements.txt
 
