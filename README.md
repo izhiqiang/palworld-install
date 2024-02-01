@@ -50,7 +50,7 @@ sudo systemctl status pal-server
 #### 强制更新
 
 ~~~
-sudo -u steam steamcmd_path +login anonymous +app_update 2394010 validate +quit
+sudo -u steam $(which steamcmd) +login anonymous +app_update 2394010 validate +quit
 sudo systemctl restart pal-server
 ~~~
 
