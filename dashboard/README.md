@@ -49,6 +49,14 @@ supervisorctl clear palworld-dashboard
 supervisorctl 
 ~~~
 
+## 生成可执行文件
+
+~~~
+pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+pip install pyinstaller -i https://mirrors.aliyun.com/pypi/simple/
+pyinstaller -F -w -n palworld main.py
+~~~
+
 ## 环境变量
 
 ~~~

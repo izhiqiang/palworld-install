@@ -2,3 +2,7 @@
 __pycache__
 /.idea
 PalWorldSettings.ini.*
+
+palworld.spec
+/build
+/dist
