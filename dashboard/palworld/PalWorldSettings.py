@@ -68,7 +68,7 @@ class PalWorldSettings(object):
     # 读取配置项
     def ReadOptionSettings(self):
         if not os.path.exists(self.palWorldSettingsFile):
-            logging.error("Unable to find %s file", self.formjson)
+            logging.error("Unable to find %s file", self.palWorldSettingsFile)
             raise FileNotFoundError
         with open(self.palWorldSettingsFile, 'r', encoding='utf-8') as file:
             content = file.read()
