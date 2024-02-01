@@ -22,18 +22,26 @@ class PalWorldSettings(object):
             "BanListURL"
         ]
         logging.debug("Fields that need to be processed as strings when writing files %s", self.strList)
+
+        # palworld 游戏目录（然后凭借完整配置文件路径）
         palServerPath = util.osnvironget("PALSERVERPATH")
         if palServerPath is not None:
             self.palWorldSettingsFile = os.path.join(palServerPath, "Pal", "Saved", "Config",
                                                      "LinuxServer", palWorldSettingsINIFile)
         else:
             self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
+
         # self.palWorldSettingsFile = "./" + palWorldSettingsINIFile
+
+        # 前端渲染form 表单json
         formjson = util.osnvironget("FORMJSON_PALWORLDSETTINGS")
         if formjson is not None:
             self.formjson = formjson
         else:
             self.formjson = "./form/PalWorldSettings.json"
+
+        # 重启palworld服务器命令
+        self.restartCommand = util.osnvironget("RESTARTPALSERVER_COMMAND")
 
     # 读取form数据
     def readFormJSON(self):
@@ -95,6 +103,5 @@ class PalWorldSettings(object):
             file.seek(file.tell() - 1, 0)
             file.write(")")
         # 重启服务
-        restartcmd = util.osnvironget("RESTARTPALSERVER_COMMAND")
-        if restartcmd is not None:
-            logging.warning("Restarting server %s log %s", restartcmd, os.system(restartcmd))
+        if self.restartCommand is not None:
+            logging.warning("Restarting server %s log %s", self.restartCommand, os.system(self.restartCommand))
