@@ -63,11 +63,11 @@ pyinstaller -F -w -n palworld main.py
 
 ~~~
 //当前的环境 （如果没有设置就表示下载/不需要登录验证，否者就是提交配置/需要登录验证）
-DASHBOARD_ENVIRONMENT="dev"
-//游戏安装目录
-PALSERVERPATH=/home/steam/Steam/steamapps/common/PalServer/
+DASHBOARD_ENVIRONMENT="prd"
+//游戏配置文件
+PALWORLDSETTINGS_FILE=/home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 //前端表单显示的input以及提交进行校验参数
-FORMJSON_PALWORLDSETTINGS=./form/PalWorldSettings.json
+FORMJSON_PALWORLDSETTINGS_FILE=./form/PalWorldSettings.json
 //修改完成之后，重启服务命令
 RESTARTPALSERVER_COMMAND="sudo systemctl restart pal-server"
 //登陆账号

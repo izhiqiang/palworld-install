@@ -23,22 +23,12 @@ class PalWorldSettings(object):
         logging.debug("Fields that need to be processed as strings when writing files %s", self.strList)
 
         # palworld 游戏目录（然后凭借完整配置文件路径）
-        palServerPath = util.osnvironget("PALSERVERPATH")
-        if palServerPath is None or util.dashboard_env() is False:
-            self.palWorldSettingsFile = "./" + self.palWorldSettingsFileName
-        else:
-            self.palWorldSettingsFile = os.path.join(palServerPath, "Pal", "Saved", "Config",
-                                                     "LinuxServer", self.palWorldSettingsFileName)
-
+        self.palWorldSettingsFile = util.envgetdefault("PALWORLDSETTINGS_FILE", "./" + self.palWorldSettingsFileName)
         # 前端渲染form 表单json
-        formjson = util.osnvironget("FORMJSON_PALWORLDSETTINGS")
-        if formjson is not None:
-            self.formjson = formjson
-        else:
-            self.formjson = "./form/PalWorldSettings.json"
+        self.formjson = util.envgetdefault("FORMJSON_PALWORLDSETTINGS_FILE", "./form/PalWorldSettings.json")
 
         # 重启palworld服务器命令
-        self.restartCommand = util.osnvironget("RESTARTPALSERVER_COMMAND")
+        self.restartCommand = util.envgetdefault("RESTARTPALSERVER_COMMAND", "")
 
     # 读取form数据
     def readFormJSON(self):
@@ -108,5 +98,5 @@ class PalWorldSettings(object):
         # 将配置文件内容写入到文件中
         util.writeFile(self.palWorldSettingsFile, configStr)
         # 重启服务
-        if self.restartCommand is not None:
+        if self.restartCommand != "":
             logging.warning("Restarting server %s log %s", self.restartCommand, os.system(self.restartCommand))

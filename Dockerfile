@@ -5,7 +5,7 @@ RUN sudo apt-get update
 RUN sudo apt install -y python3-pip
 
 ENV DASHBOARD_ENVIRONMENT="prd"
-ENV PALSERVERPATH=/home/steam/Steam/steamapps/common/PalServer/
+ENV PALWORLDSETTINGS_FILE=/home/steam/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 ENV RESTARTPALSERVER_COMMAND="supervisorctl restart palserver"
 ENV DASHBOARD_BASICUSER="dashboard"
 ENV DASHBOARD_BASICPWD="123456"

@@ -6,17 +6,18 @@ import os
 
 
 def dashboard_env() -> bool:
-    if osnvironget("DASHBOARD_ENVIRONMENT") is None:
+    if envgetdefault("DASHBOARD_ENVIRONMENT") == "":
         return False
     return True
 
+
 # 读取环境变量
-def osnvironget(env: str) -> str | None:
+def envgetdefault(env: str, default: str = "") -> str:
     val = os.environ.get(env)
     if val is not None:
         if val != "":
             return val
-    return None
+    return default
 
 
 # 写入文件内容
@@ -41,5 +42,5 @@ def readJSONFile(file: str):
     if not os.path.exists(file):
         logging.error("Unable to find %s file", file)
         raise FileNotFoundError
-    with open(file, "r",encoding='utf-8') as f2:
+    with open(file, "r", encoding='utf-8') as f2:
         return json.load(f2)

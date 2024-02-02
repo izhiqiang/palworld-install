@@ -23,17 +23,13 @@ security = HTTPBasic()
 # 登录验证中间件
 def middlewareHTTPBasic():
     if util.dashboard_env() is False:
-        return Depends(HTTPBasic) 
+        return Depends(HTTPBasic)
     else:
         def verify(credentials: HTTPBasicCredentials = Depends(security)):
             current_username = credentials.username
-            user = util.osnvironget("DASHBOARD_BASICUSER")
-            if user is None:
-                user = "dashboard"
+            user = util.envgetdefault("DASHBOARD_BASICUSER", "dashboard")
             current_password = credentials.password
-            pwd = util.osnvironget("DASHBOARD_BASICPWD")
-            if pwd is None:
-                pwd = "123456"
+            pwd = util.envgetdefault("DASHBOARD_BASICPWD", "123456")
             if current_password == pwd and current_username == user:
                 return credentials.username
             raise HTTPException(
@@ -41,8 +37,8 @@ def middlewareHTTPBasic():
                 detail="Incorrect username or password",
                 headers={"WWW-Authenticate": "Basic"},
             )
-        return Depends(verify)
 
+        return Depends(verify)
 
 
 @app.get("/")

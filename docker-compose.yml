@@ -9,6 +9,7 @@ services:
     network_mode: bridge
     ports:
       - 8211:8211/udp
+      - 8000:8000
       # - 25575:25575/tcp # only use in RCON_ENABLED=true
     environment:
       - DASHBOARD_BASICUSER=dashboard
