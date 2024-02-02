@@ -12,6 +12,8 @@
 | 16～24 | 16核32G  |
 | 32     | 16核64G  |
 
+推荐腾讯云游戏专属服务器一个月近需32RMB，[点击我进入购买](https://curl.qcloud.com/Y9Umsuw8)
+
 ## 获取方式
 
 ### Dokcer环境
@@ -46,15 +48,24 @@ sudo systemctl status pal-server
 #### 强制更新
 
 ~~~
-sudo -u steam $(which steamcmd) +login anonymous +app_update 2394010 validate +quit
-sudo systemctl restart pal-server
+wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/update_restart.sh|sh
 ~~~
 
 #### 开放端口8211
 
 幻兽帕鲁默认使用8211端口进行通信，进入服务商放通8211端口，协议UDP
 
+#### [安装面板](https://github.com/zzqqw/palworld-install/tree/main/dashboard)
+
+~~~
+sudo apt install -y python3 python3-pip
+sudo -u steam git clone https://github.com/zzqqw/palworld-install.git ~steam/palworld
+pip install ~steam/palworld/dashboard/requirements.txt
+python3 ~steam/palworld/dashboard/main.py 
+~~~
+
 #### 配置项
+
 1、复制并执行以下命令为配置文件增加权限，避免后续步骤中由于权限问题导致无法编辑。
 
 ~~~
