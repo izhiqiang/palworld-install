@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 操作系统：Ubuntu 22.04 LTS
+# wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/install.sh|sh
+
 if [ "$(whoami)" = "root" ]; then
   echo "Error: Running as root user is not allowed" >&2
   exit 1

@@ -1,9 +1,9 @@
 Can help you set up Palworld on the server
 
-## Internationalization Doc
+## 国际化文档
 
-- [Chinese documents](./README.md)
-- [English document](./README.EN.md)
+- [中文文档](./README.md)
+- [英文文档](./README.EN.md)
 
 # Server configuration recommendations
 
@@ -35,7 +35,7 @@ docker-compose -f docker-compose.yml up -d
 > Operating System: Ubuntu 22.04 LTS
 
 ~~~
-wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/install.sh|sh
+wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/install.sh|sh
 ~~~
 
 #### Related commands
@@ -98,6 +98,12 @@ swapon --show
 
 ~~~
 cd ~
-wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/auto_restart.sh
+wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/auto_restart.sh
 * * * * * /bin/bash ~/auto_restart.sh > /dev/null 2>&1
+~~~
+
+### Update palworld server and complete restart
+
+~~~
+wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/update_restart.sh|sh
 ~~~

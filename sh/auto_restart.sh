@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 操作系统：Ubuntu 22.04 LTS
+# wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/auto_restart.sh
 # * * * * * /bin/bash ~/auto_restart.sh > /dev/null 2>&1
 
 service_name="pal-server.service"

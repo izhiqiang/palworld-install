@@ -1,7 +1,7 @@
-## 国际化
+## Internationalization Doc
 
-- [中文文档](./README.md)
-- [英文文档](./README.EN.md)
+- [Chinese documents](./README.md)
+- [English document](./README.EN.md)
 
 ## 服务器配置推荐
 
@@ -28,12 +28,8 @@ docker-compose -f docker-compose.base.yml up -d
 > - 操作系统：Ubuntu 22.04 LTS
 
 ```shell
-wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/install.sh|sh
+wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/install.sh|sh
 ```
-~~~
-wget -O - https://cdn.jsdelivr.net/gh/zzqqw/palworld-install@main/install.sh|sh
-~~~
-
 如果您后续想管理该服务，可以参考以下命令来进行：
 
 ~~~
@@ -120,7 +116,13 @@ swapon --show
 
 ~~~
 cd ~
-wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/auto_restart.sh
+wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/auto_restart.sh
 * * * * * /bin/bash ~/auto_restart.sh > /dev/null 2>&1
+~~~
+
+### 更新palworld服务器并完成重启
+
+~~~
+wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/update_restart.sh|sh
 ~~~
 
