@@ -19,7 +19,7 @@
 ### Dokcer环境
 
 ~~~
-git clone https://github.com/zzqqw/palworld-install.git
+git clone https://github.com/izhiqiang/palworld-install.git
 cd palworld-install
 //单独启动
 docker-compose -f docker-compose.base.yml up -d
@@ -30,7 +30,7 @@ docker-compose -f docker-compose.base.yml up -d
 > - 操作系统：Ubuntu 22.04 LTS
 
 ```shell
-wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/install.sh|sh
+wget -O - https://raw.githubusercontent.com/izhiqiang/palworld-install/main/sh/install.sh|sh
 ```
 如果您后续想管理该服务，可以参考以下命令来进行：
 
@@ -48,18 +48,18 @@ sudo systemctl status pal-server
 #### 强制更新
 
 ~~~
-wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/update_restart.sh|sh
+wget -O - https://raw.githubusercontent.com/izhiqiang/palworld-install/main/sh/update_restart.sh|sh
 ~~~
 
 #### 开放端口8211
 
 幻兽帕鲁默认使用8211端口进行通信，进入服务商放通8211端口，协议UDP
 
-#### [安装面板](https://github.com/zzqqw/palworld-install/tree/main/dashboard)
+#### [安装面板](https://github.com/izhiqiang/palworld-install/tree/main/dashboard)
 
 ~~~
 sudo apt install -y python3 python3-pip
-sudo -u steam git clone https://github.com/zzqqw/palworld-install.git ~steam/palworld
+sudo -u steam git clone https://github.com/izhiqiang/palworld-install.git ~steam/palworld
 pip install ~steam/palworld/dashboard/requirements.txt
 python3 ~steam/palworld/dashboard/main.py 
 ~~~
@@ -127,13 +127,13 @@ swapon --show
 
 ~~~
 cd ~
-wget https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/auto_restart.sh
+wget https://raw.githubusercontent.com/izhiqiang/palworld-install/main/sh/auto_restart.sh
 * * * * * /bin/bash ~/auto_restart.sh > /dev/null 2>&1
 ~~~
 
 ### 更新palworld服务器并完成重启
 
 ~~~
-wget -O - https://raw.githubusercontent.com/zzqqw/palworld-install/main/sh/update_restart.sh|sh
+wget -O - https://raw.githubusercontent.com/izhiqiang/palworld-install/main/sh/update_restart.sh|sh
 ~~~
 

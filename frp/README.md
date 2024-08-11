@@ -42,7 +42,7 @@ auth.token = "123456" #token设置密码，用于通过身份验证创建连接
 #frp服务仪表板配置
 webServer.port = 17300  #{也可自行修改端口}
 webServer.addr = "0.0.0.0" #公网ip或者域名
-webServer.user = "zzqqw" #登录用户名{可自行修改}
+webServer.user = "izhiqiang" #登录用户名{可自行修改}
 webServer.password = "123456" #登录密码{可自行修改}
 ~~~
 
